@@ -18,9 +18,9 @@ int main(int argc, char *argv[])
 	char *from = argv[3];
 	char *to = malloc(strlen(from) * sizeof(char));
 
-	if (strcmp(argv[1], "--encrypt") == 0) {
+	if (strcmp(argv[1], "-e") == 0) {
 		encrypt(from, to, key);
-	} else if (strcmp(argv[1], "--decrypt") == 0) {
+	} else if (strcmp(argv[1], "-d") == 0) {
 		decrypt(from, to, key);
 	} else {
 		printf("Error: invalid option flag\n");
@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
 	return 0;
 }
 
-/* Encrypt string s with given key k; copy result into string t */
+/* Encrypt string s with key k; copy result into string t */
 void encrypt(char *s, char *t, int k)
 {
 	int i, c;
@@ -48,5 +48,19 @@ void encrypt(char *s, char *t, int k)
 	t[i] = s[i];	
 }
 
-/* Decrypt string s with given key k; copy result into string t */
-void decrypt(char *s, char *t, int k) {}
+/* Decrypt string s with key k; copy result into string t */
+void decrypt(char *s, char *t, int k)
+{
+	int i, c;
+
+	for (i = 0; (c = s[i]) != '\0'; i++) {
+		if (c >= 'A' && c <= 'Z') {
+			t[i] = 'A' + (((c - 'A') + (26 - k)) % 26);
+		} else if (c >= 'a' && c <= 'z') {
+			t[i] = 'a' + (((c - 'a') + (26 - k)) % 26);
+		} else {
+			t[i] = c;
+		}
+	}
+	t[i] = s[i];
+}
