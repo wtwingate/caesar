@@ -5,32 +5,48 @@
 void encrypt(char *s, char *t, int k);
 void decrypt(char *s, char *t, int k);
 
-int main(int argc, char *argv)
+int main(int argc, char *argv[])
 {
+	// TODO: implement --help flag
+
 	if (argc < 4) {
-		printf("Usage: caesar [option] [key] [string]");
+		printf("Usage: caesar [option] [key] [string]\n");
 		return 1;
 	}
 
-	int key = (int) argv[2];
+	int key = atoi(argv[2]);
 	char *from = argv[3];
-	char *to = malloc(strlen(*from) * sizeof(char));
+	char *to = malloc(strlen(from) * sizeof(char));
 
-	if (argv[1] == "--encrypt" || argv[1] == "-e") {
+	if (strcmp(argv[1], "--encrypt") == 0) {
 		encrypt(from, to, key);
-	} else if (argv[1] == "--decrypt" || argv[1] == "-d") {
+	} else if (strcmp(argv[1], "--decrypt") == 0) {
 		decrypt(from, to, key);
 	} else {
-		printf("Error: invalid option");
+		printf("Error: invalid option flag\n");
 		return 1;
 	}
 
-	printf("%s", *to);
+	printf("%s\n", to);
 	return 0;
 }
 
 /* Encrypt string s with given key k; copy result into string t */
-void encrypt(char *s, char *t, int k) {}
+void encrypt(char *s, char *t, int k)
+{
+	int i, c;
+
+	for (i = 0; (c = s[i]) != '\0'; i++) {
+		if (c >= 'A' && c <= 'Z') {
+			t[i] = 'A' + (((c - 'A') + k) % 26);
+		} else if (c >= 'a' && c <= 'z') {
+			t[i] = 'a' + (((c - 'a') + k) % 26);
+		} else {
+			t[i] = c;
+		}
+	}
+	t[i] = s[i];	
+}
 
 /* Decrypt string s with given key k; copy result into string t */
 void decrypt(char *s, char *t, int k) {}
