@@ -7,10 +7,17 @@ void decrypt(char *s, char *t, int k);
 
 int main(int argc, char *argv[])
 {
-	// TODO: implement --help flag
+	if (argc == 2 && strcmp(argv[1], "--help") == 0) {
+		printf("Usage: caesar [option] [key] [message]\n\n");
+		printf("Options:\n");
+		printf("--help     display the help menu\n");
+		printf("--encrypt  encrypt message using key\n");
+		printf("--decrypt  decrypt message using key\n");
+		return 0;
+	}
 
 	if (argc < 4) {
-		printf("Usage: caesar [option] [key] [string]\n");
+		printf("Usage: caesar [option] [key] [message]\n");
 		return 1;
 	}
 
@@ -18,9 +25,9 @@ int main(int argc, char *argv[])
 	char *from = argv[3];
 	char *to = malloc(strlen(from) * sizeof(char));
 
-	if (strcmp(argv[1], "-e") == 0) {
+	if (strcmp(argv[1], "--encrypt") == 0) {
 		encrypt(from, to, key);
-	} else if (strcmp(argv[1], "-d") == 0) {
+	} else if (strcmp(argv[1], "--decrypt") == 0) {
 		decrypt(from, to, key);
 	} else {
 		printf("Error: invalid option flag\n");
