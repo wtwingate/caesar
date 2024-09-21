@@ -11,8 +11,8 @@ int main(int argc, char *argv[])
 		printf("Usage: caesar [option] [key] [message]\n\n");
 		printf("Options:\n");
 		printf("--help     display the help menu\n");
-		printf("--encrypt  encrypt message using key\n");
-		printf("--decrypt  decrypt message using key\n");
+		printf("-e, --encrypt  encrypt message using key\n");
+		printf("-d, --decrypt  decrypt message using key\n");
 		return 0;
 	}
 
@@ -25,9 +25,9 @@ int main(int argc, char *argv[])
 	char *from = argv[3];
 	char *to = malloc(strlen(from) * sizeof(char));
 
-	if (strcmp(argv[1], "--encrypt") == 0) {
+	if (!strcmp(argv[1], "--encrypt") || !strcmp(argv[1], "-e")) {
 		encrypt(from, to, key);
-	} else if (strcmp(argv[1], "--decrypt") == 0) {
+	} else if (!strcmp(argv[1], "--decrypt") || !strcmp(argv[1], "-d")) {
 		decrypt(from, to, key);
 	} else {
 		printf("Error: invalid option flag\n");
